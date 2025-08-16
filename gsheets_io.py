@@ -1,17 +1,30 @@
-import re
 import pandas as pd
+import numpy as np
 import gspread
 from gspread_dataframe import get_as_dataframe, set_with_dataframe
+from google.auth.transport.requests import Request
+from google.oauth2.service_account import Credentials
 
-SERVICE_ACCOUNT_FILE = r"d:/Users/Admin/Desktop/inventory/app/service_account.json"  
-SPREADSHEET_ID = "1kQticbIs3s6HXkAvUaQ_Uf-9ZIooXQI-SkTTAyI4SVI"       
+# Use Streamlit secrets for authentication
+import streamlit as st
+
+# Use the credentials stored in secrets.toml
+SECRETS = st.secrets["gcp_service_account"]
+
+# Construct credentials object from the secrets
+creds = Credentials.from_service_account_info(
+    SECRETS,
+    scopes=["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
+)
+
+SPREADSHEET_ID = "1kQticbIs3s6HXkAvUaQ_Uf-9ZIooXQI-SkTTAyI4SVI"  
 HEADER_ROW = 1 
 
 _gc = None
 def _client():
     global _gc
     if _gc is None:
-        _gc = gspread.service_account(filename=SERVICE_ACCOUNT_FILE)
+        _gc = gspread.authorize(creds)  # Use credentials for authorization
     return _gc
 
 def _open_sheet():
