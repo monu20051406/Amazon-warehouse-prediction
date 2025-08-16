@@ -35,12 +35,12 @@ def run_full_forecast(
     prediction_choice: int,
     creds
 ):
-    if sales_file.type == "text/csv":
+    if sales_file.name.endswith(".csv"):
         new_sales_df = pd.read_csv(sales_file)
     else:
         new_sales_df = pd.read_excel(sales_file)
 
-    if inv_file.type == "text/csv":
+    if inv_file.name.endswith(".csv"):
         inv_df = pd.read_csv(inv_file)
     else:
         inv_df = pd.read_excel(inv_file)
