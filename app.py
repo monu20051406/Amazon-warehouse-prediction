@@ -240,7 +240,12 @@ elif page == "Inventory Tracking":
         </div>
         """, unsafe_allow_html=True)
     st.markdown("### Track and Manage your inventory at Amazon warehouses.")
-    st.markdown("Upload your daily Inventory Ledger report (CSV) to update the summary.")
+    st.markdown("""
+                **Inventory File**: 
+            - Go to <a href="https://sellercentral.amazon.in/ap/signin" target="_blank" class="seller-central-link">Seller Central</a> and open the left sidebar menu.
+            - Go to Reports → Fulfillment → Inventory
+            - Download the <b>Inventory Ledger Report</b> for last 7 days.
+            - Upload the file here (CSV .csv format).""")
     st.markdown("---")
 
     try:
