@@ -24,7 +24,8 @@ def cached_forecast(sales_file, inv_file, time_unit, prediction_choice):
         sales_file=sales_file,
         inv_file=inv_file,
         time_unit=time_unit,
-        prediction_choice=prediction_choice
+        prediction_choice=prediction_choice,
+        creds = creds
     )
 
 # --- Sidebar for page navigation ---
