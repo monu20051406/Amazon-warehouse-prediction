@@ -5,6 +5,7 @@ from gsheets_io import read_df, write_df, upsert_df
 TAB_INV_SUMMARY = "inventory_summary"
 
 def inventory_ledger(inven_file, creds):
+
     if inven_file is not None:
         df = pd.read_csv(inven_file)
         df = df[['Date', 'ASIN', 'Ending Warehouse Balance', 'Location']]
@@ -22,6 +23,7 @@ def inventory_ledger(inven_file, creds):
             last_row = group_sorted.iloc[-1]
             current_stock = last_row['EndingBalance']
 
+            # Detect last order date where stock decreased
             deltas = group_sorted['EndingBalance'].diff()
             last_order_date = group_sorted.loc[deltas < 0, 'Date'].max()
 
@@ -45,11 +47,11 @@ def inventory_ledger(inven_file, creds):
         new_summary = None
 
     try:
-        master_df = read_df(TAB_INV_SUMMARY, creds)  
+        master_df = read_df(TAB_INV_SUMMARY)
         keep_cols = ["ASIN", "Warehouse", "Current Stock", "Last Order Date", "Days Since Last Order"]
         master_df = master_df[[c for c in keep_cols if c in master_df.columns]]
     except Exception:
-        master_df = pd.DataFrame(columns=[ 
+        master_df = pd.DataFrame(columns=[
             "ASIN", "Warehouse", "Current Stock", "Last Order Date", "Days Since Last Order"
         ])
 
@@ -61,7 +63,7 @@ def inventory_ledger(inven_file, creds):
 
         final_df = combined[combined['Current Stock'] != 0].reset_index(drop=True)
 
-        write_df(TAB_INV_SUMMARY, final_df, creds)
+        write_df(TAB_INV_SUMMARY, final_df)
 
         return final_df
     
