@@ -277,11 +277,13 @@ elif page == "Inventory Tracking":
     st.markdown("#### Current Inventory Summary")
 
     if not master_df.empty:
+        master_df['ASIN'] = master_df['ASIN'].astype(str)
+
         inv_col1, inv_col2 = st.columns(2)
         with inv_col1:
             asins_inv = st.multiselect(
                 "Choose an ASIN",
-                options=sorted(master_df['ASIN'].astype(str).unique()),
+                options=sorted(master_df['ASIN'].unique()),
                 default=None,
                 key="inv_asins_filter"
             )
