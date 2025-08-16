@@ -28,11 +28,13 @@ def inventory_ledger(inven_file, creds):
             last_order_date = group_sorted.loc[deltas < 0, 'Date'].max()
 
             if pd.notna(last_order_date):
+                # If there is a valid last order date
                 last_order_date_str = last_order_date.strftime('%Y-%m-%d')
                 days_since_last_order = (datetime.now() - pd.to_datetime(last_order_date)).days
             else:
+                # If no stock decrease (no valid last order date), set appropriate default values
                 last_order_date_str = ""
-                days_since_last_order = None
+                days_since_last_order = None  # or set it to a large value like 9999 if desired
 
             summary_list.append({
                 "ASIN": asin,
