@@ -293,17 +293,25 @@ elif page == "Inventory Tracking":
                 key="inv_warehouse_filter"
             )
 
-        display_df = master_df.copy()      
+        # Apply filters after the selections
+        display_df = master_df.copy()
+
+        # Apply ASIN filter
         if asins_inv:
             display_df = display_df[display_df['ASIN'].isin(asins_inv)]
+
+        # Apply Warehouse filter
         if warehouse_inv:
             display_df = display_df[display_df['Warehouse'].isin(warehouse_inv)]
-        
+
+        # Format the 'Last Order Date' column for display
         display_df_formatted = display_df.copy()
         display_df_formatted['Last Order Date'] = display_df_formatted['Last Order Date'].dt.strftime('%Y-%m-%d')
-        
+
+        # Display the filtered DataFrame
         st.dataframe(display_df_formatted, use_container_width=True)
 
+        # Prepare downloadable ZIP of filtered and full data
         zip_buffer = io.BytesIO()
         with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zipf:
             filtered_excel_buffer = io.BytesIO()
