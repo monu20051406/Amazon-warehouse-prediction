@@ -45,8 +45,9 @@ def run_full_forecast(
     else:
         inv_df = pd.read_excel(inv_file)
 
-    hist_df = read_df(TAB_HIST, creds)
-    cluster_wh_df = read_df(TAB_CLUSTER_MAP, creds)
+    hist_df = read_df(TAB_HIST)
+    cluster_wh_df = read_df(TAB_CLUSTER_MAP)
+
 
     new_sales_df = new_sales_df.rename(columns={'FC': 'Warehouse ID', 'Shipment To Postal Code': 'Ship Postal Code'})
     
@@ -79,7 +80,7 @@ def run_full_forecast(
 
     # ---------- POSTAL CODE TO COORDS ----------
     try:
-        coord_df = read_df(TAB_COORDS, creds)
+        coord_df = read_df(TAB_COORDS)
         pin_to_coord = {int(row['Pincode']): (row['Latitude'], row['Longitude'])
                         for _, row in coord_df.iterrows()
                         if pd.notna(row.get('Pincode'))}
