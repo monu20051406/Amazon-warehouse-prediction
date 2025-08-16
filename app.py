@@ -245,7 +245,7 @@ elif page == "Inventory Tracking":
             - Go to <a href="https://sellercentral.amazon.in/ap/signin" target="_blank" class="seller-central-link">Seller Central</a> and open the left sidebar menu.
             - Go to Reports → Fulfillment → Inventory
             - Download the <b>Inventory Ledger Report</b> for last 7 days.
-            - Upload the file here (CSV .csv format).""")
+            - Upload the file here (CSV .csv format).""", unsafe_allow_html=True)
     st.markdown("---")
 
     try:
