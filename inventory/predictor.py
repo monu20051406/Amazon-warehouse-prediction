@@ -19,15 +19,6 @@ TAB_MAJORITY_DATA   = "majority_data_df"
 TAB_MINORITY_DATA   = "minority_data_df"
 TAB_TOP3 = "top_3_warehouses"
 
-'''def read_uploaded_file(file):
-    """Function to read an uploaded file as a dataframe"""
-    if file.type == "text/csv":
-        return pd.read_csv(file)  # Read as CSV
-    elif file.type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-        return pd.read_excel(file)  # Read as Excel
-    else:
-        raise ValueError("Unsupported file type")'''
-
 def run_full_forecast(
     sales_file,
     inv_file,   
